@@ -1,4 +1,3 @@
-pip install flask
-pip install numpy
-pip install math
-pip install pandas
+flask
+numpy
+pandas
