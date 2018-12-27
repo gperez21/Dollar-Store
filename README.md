@@ -15,3 +15,13 @@ I wanted to look at the locations of dollar stores from three main corps (Dollar
 [**Stores per Congressional District (CSV):**](https://github.com/gperez21/Dollar-Store/blob/master/Dollar%20store/Stata/Data/District_classification.csv) Only districts outside of the continental USA and those without any dollar stores are excluded.
 
 [**Mean Number of stores by Citylab cluster (CSV):**](https://github.com/gperez21/Dollar-Store/blob/master/Dollar%20store/Stata/Data/Mean_store_by_cluster.csv) Citylab publishes "cluster" [classifications](https://github.com/theatlantic/citylab-data/tree/master/citylab-congress) for each congressional district. This table shows the mean number of stores per district, broken down by Citylab cluster.
+
+
+
+## Data Sources
+[Citylab:](https://github.com/theatlantic/citylab-data/tree/master/citylab-congress) CDI - Congressional district classifications
+
+
+[Dollar Store Data:](https://raw.githubusercontent.com/jshannon75/snap_retailers_2008_2017/master/data/dollars_all_wide.csv) Location and other data on dollar stores in the continental USA
+
+[Shapefiles for Congressional Districts:](https://www.census.gov/geo/maps-data/data/cbf/cbf_cds.html) Shapefiles for state level districts can be found in a number of sites.
