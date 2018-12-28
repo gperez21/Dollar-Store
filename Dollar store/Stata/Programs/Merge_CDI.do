@@ -25,6 +25,7 @@ replace General_2016 = "D" if trump16<clinton16
 
 gen General_2012 = "R" if romney12>obama12
 replace General_2012 = "D" if romney12<obama12
+
 save "$Data\CDI.dta", replace
 
 * create matching number and state variables for the store file
@@ -57,9 +58,11 @@ label var General_2012 "Election Result, 2012"
 label var romney12 "Romney Share of District Votes"
 
 gen District_type = "Obama-Trump" if General_2016 == "R" & General_2012 == "D"
-gen District_type = "Romney-Trump" if General_2016 == "R" & General_2012 == "R"
-gen District_type = "Obama-Clinton" if General_2016 == "D" & General_2012 == "D"
-gen District_type = "Romney-Clinton" if General_2016 == "R" & General_2012 == "D"
+replace District_type = "Romney-Trump" if General_2016 == "R" & General_2012 == "R"
+replace District_type = "Obama-Clinton" if General_2016 == "D" & General_2012 == "D"
+replace District_type = "Romney-Clinton" if General_2016 == "D" & General_2012 == "R"
+// FL-07 swung towards clinton from a dead heat in 2012
+replace District_type = "Romney-Clinton" if district =="FL-07"
 
 * Export data
 export delimited "$Data\District_classification.csv", replace
@@ -69,9 +72,26 @@ export delimited "$Data\Mean_store_by_cluster.csv", replace
 * Make map
 spmap Number_of_stores using "Districts_coor.dta", id(_ID) fcolor(Reds)
 
-* Make boxplot
-graph box Number_of_stores, by(General_2016)
+* Make boxplot Obama-Trump
+graph box Number_of_stores ///
+if District_type == "Obama-Trump" | District_type == "Obama-Clinton", ///
+by(District_type, graphregion(fcolor(white))) ///
+ylab(, nogrid)
 
+
+* Make boxplot Romney-Trump
+graph box Number_of_stores ///
+if District_type == "Romney-Trump" | District_type == "Romney-Clinton", ///
+by(District_type, graphregion(fcolor(white))) ///
+ylab(, nogrid)
+
+* Make boxplot Romney-Trump
+graph box Number_of_stores, ///
+by(District_type, graphregion(fcolor(white))) ///
+ylab(, nogrid)
+
+sort District_type Nu
+br
 * Scatter
 twoway scatter trump16 Number
 
