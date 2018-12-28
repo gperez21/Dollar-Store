@@ -86,8 +86,15 @@ by(District_type, graphregion(fcolor(white))) ///
 ylab(, nogrid)
 
 * Make boxplot Romney-Trump
+gen sorter = 1 if District_type == "Obama-Clinton"
+replace sorter = 2 if District_type == "Obama-Trump"
+replace sorter = 3 if District_type == "Romney-Trump"
+replace sorter = 4 if District_type == "Romney-Clinton"
+
 graph box Number_of_stores, ///
-by(District_type, graphregion(fcolor(white))) ///
+over(District_type, sort(sorter))
+
+, graphregion(fcolor(white))) ///
 ylab(, nogrid)
 
 sort District_type Nu
