@@ -19,8 +19,12 @@ ren cd district
 split district, p("-")
 ren district1 state
 ren district2 number
+
 gen General_2016 = "R" if trump16>clinton16
 replace General_2016 = "D" if trump16<clinton16
+
+gen General_2012 = "R" if romney12>obama12
+replace General_2012 = "D" if romney12<obama12
 save "$Data\CDI.dta", replace
 
 * create matching number and state variables for the store file
@@ -43,10 +47,20 @@ save "$Data\Dollar_CDI.dta", replace
 use "$Data\Dollar_CDI.dta", clear
 * Stores per district
 gen Number_of_stores = 1
-collapse (sum) Number_of_stores, by(district cluster _ID General_2016 trump16)
+
+collapse (sum) Number_of_stores, by(district cluster _ID General_* romney12 trump16 )
 label var Number "Number of Dollar Stores in District"
-label var General "Election Result, 2016"
-sort Gen Nu
+label var General_2016 "Election Result, 2016"
+label var trump16 "Trump Share of District Votes"
+
+label var General_2012 "Election Result, 2012"
+label var romney12 "Romney Share of District Votes"
+
+gen District_type = "Obama-Trump" if General_2016 == "R" & General_2012 == "D"
+gen District_type = "Romney-Trump" if General_2016 == "R" & General_2012 == "R"
+gen District_type = "Obama-Clinton" if General_2016 == "D" & General_2012 == "D"
+gen District_type = "Romney-Clinton" if General_2016 == "R" & General_2012 == "D"
+
 * Export data
 export delimited "$Data\District_classification.csv", replace
 collapse (mean) Number_of_stores, by(cluster)
@@ -56,5 +70,8 @@ export delimited "$Data\Mean_store_by_cluster.csv", replace
 spmap Number_of_stores using "Districts_coor.dta", id(_ID) fcolor(Reds)
 
 * Make boxplot
-graph box Number_of_stores, by(General cluster)
+graph box Number_of_stores, by(General_2016)
+
+* Scatter
+twoway scatter trump16 Number
 
