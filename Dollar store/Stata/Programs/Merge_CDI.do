@@ -14,11 +14,13 @@ gl Citylab_data "$root\City lab data"
 
 
 * import CDI file from city labs
-import delimited "$Citylab_data\CDI.csv", clear
+import delimited "$Citylab_data\CDI_extended.csv", clear
 ren cd district
 split district, p("-")
 ren district1 state
 ren district2 number
+gen General_2016 = "R" if trump16>clinton16
+replace General_2016 = "D" if trump16<clinton16
 save "$Data\CDI.dta", replace
 
 * create matching number and state variables for the store file
@@ -32,19 +34,26 @@ replace number = (2-length(number))*"0" +number
 
 * merge in CDI
 merge m:1 state number using "$Data\CDI.dta"
-keep if _m == 3
+// keep if _m == 3
 drop _m
 
 save "$Data\Dollar_CDI.dta", replace
 
 
 use "$Data\Dollar_CDI.dta", clear
-
 * Stores per district
 gen Number_of_stores = 1
-collapse (sum) Number_of_stores, by(district cluster _ID)
+collapse (sum) Number_of_stores, by(district cluster _ID General_2016 trump16)
+label var Number "Number of Dollar Stores in District"
+label var General "Election Result, 2016"
+* Export data
 export delimited "$Data\District_classification.csv", replace
 collapse (mean) Number_of_stores, by(cluster)
 export delimited "$Data\Mean_store_by_cluster.csv", replace
 
+* Make map
 spmap Number_of_stores using "Districts_coor.dta", id(_ID) fcolor(Reds)
+
+* Make boxplot
+graph box Number_of_stores, by(General cluster)
+

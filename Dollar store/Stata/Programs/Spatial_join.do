@@ -3,9 +3,9 @@
 * set up
 clear
 set type double
-cd "C:\Users\perez_g\Desktop\Data_vis_wa\Dollar store\Stata"
+cd "C:\Users\perez_g\Desktop\Data_vis_wa\data_vis_wa\Dollar store\Stata\Programs"
 
-gl root "C:\Users\perez_g\Desktop\Data_vis_wa\Dollar store"
+gl root "C:\Users\perez_g\Desktop\Data_vis_wa\data_vis_wa\Dollar store"
 gl GIS "$root\GIS"
 gl Stata "$root\Stata"
 gl Dollar_data "$root\Dollar store data"
