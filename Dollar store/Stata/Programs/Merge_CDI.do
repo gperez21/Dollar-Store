@@ -46,6 +46,7 @@ gen Number_of_stores = 1
 collapse (sum) Number_of_stores, by(district cluster _ID General_2016 trump16)
 label var Number "Number of Dollar Stores in District"
 label var General "Election Result, 2016"
+sort Gen Nu
 * Export data
 export delimited "$Data\District_classification.csv", replace
 collapse (mean) Number_of_stores, by(cluster)
