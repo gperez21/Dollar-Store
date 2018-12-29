@@ -3,18 +3,18 @@
 * set up
 clear
 set type double
-cd "C:\Users\perez_g\Desktop\Data_vis_wa\data_vis_wa\Dollar store\Stata"
+cd "/Users/lep12/Desktop/Dollar-Store/Dollar store/Stata"
 
-gl root "C:\Users\perez_g\Desktop\Data_vis_wa\data_vis_wa\Dollar store"
-gl GIS "$root\GIS"
-gl Stata "$root\Stata"
-gl Data "$Stata\Data"
-gl Dollar_data "$root\Dollar store data"
-gl Citylab_data "$root\City lab data"
+gl root "/Users/lep12/Desktop/Dollar-Store/Dollar store"
+gl GIS "$root/GIS"
+gl Stata "$root/Stata"
+gl Data "$Stata/Data"
+gl Dollar_data "$root/Dollar store data"
+gl Citylab_data "$root/City lab data"
 
 
 * import CDI file from city labs
-import delimited "$Citylab_data\CDI_extended.csv", clear
+import delimited "$Citylab_data/CDI_extended.csv", clear
 ren cd district
 split district, p("-")
 ren district1 state
@@ -26,10 +26,10 @@ replace General_2016 = "D" if trump16<clinton16
 gen General_2012 = "R" if romney12>obama12
 replace General_2012 = "D" if romney12<obama12
 
-save "$Data\CDI.dta", replace
+save "$Data/CDI.dta", replace
 
 * create matching number and state variables for the store file
-use "$Data\DS_mapped_to_dist.dta", clear
+use "$Data/DS_mapped_to_dist.dta", clear
 ren NAMELSAD district
 replace district = subinstr(district, "Congressional District ", "",.)
 drop if district == "Delegate District (at Large)" // DC isnt in the CDI data
@@ -65,40 +65,40 @@ replace District_type = "Romney-Clinton" if General_2016 == "D" & General_2012 =
 replace District_type = "Romney-Clinton" if district =="FL-07"
 
 * Export data
-export delimited "$Data\District_classification.csv", replace
-collapse (mean) Number_of_stores, by(cluster)
-export delimited "$Data\Mean_store_by_cluster.csv", replace
+// export delimited "$Data\District_classification.csv", replace
+// collapse (mean) Number_of_stores, by(cluster)
+// export delimited "$Data\Mean_store_by_cluster.csv", replace
 
 * Make map
-spmap Number_of_stores using "Districts_coor.dta", id(_ID) fcolor(Reds)
+// spmap Number_of_stores using "Districts_coor.dta", id(_ID) fcolor(Reds)
 
 * Make boxplot Obama-Trump
-graph box Number_of_stores ///
-if District_type == "Obama-Trump" | District_type == "Obama-Clinton", ///
-by(District_type, graphregion(fcolor(white))) ///
-ylab(, nogrid)
+// graph box Number_of_stores ///
+// if District_type == "Obama-Trump" | District_type == "Obama-Clinton", ///
+// by(District_type, graphregion(fcolor(white))) ///
+// ylab(, nogrid)
 
 
 * Make boxplot Romney-Trump
-graph box Number_of_stores ///
-if District_type == "Romney-Trump" | District_type == "Romney-Clinton", ///
-by(District_type, graphregion(fcolor(white))) ///
-ylab(, nogrid)
+// graph box Number_of_stores ///
+// if District_type == "Romney-Trump" | District_type == "Romney-Clinton", ///
+// by(District_type, graphregion(fcolor(white))) ///
+// ylab(, nogrid)
 
 * Make boxplot Romney-Trump
-gen sorter = 1 if District_type == "Obama-Clinton"
-replace sorter = 2 if District_type == "Obama-Trump"
-replace sorter = 3 if District_type == "Romney-Trump"
-replace sorter = 4 if District_type == "Romney-Clinton"
+gen sorter = 2 if District_type == "Obama-Clinton"
+replace sorter = 3 if District_type == "Obama-Trump"
+replace sorter = 4 if District_type == "Romney-Trump"
+replace sorter = 1 if District_type == "Romney-Clinton"
 
 graph box Number_of_stores, ///
 over(District_type, sort(sorter))
 
-, graphregion(fcolor(white))) ///
-ylab(, nogrid)
+// , graphregion(fcolor(white))) ///
+// ylab(, nogrid)
 
 sort District_type Nu
 br
 * Scatter
-twoway scatter trump16 Number
+// twoway scatter trump16 Number
 
