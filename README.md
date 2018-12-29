@@ -1,5 +1,8 @@
 # Dollar Store Distribution
-I wanted to look at the locations of dollar stores from three main corps (Dollar Tree, Family Dollar, and Dollar General) across the continental USA. I mapped these to congressional legislative districts and made maps of the rate of stores per district.
+We wanted to look at the locations of dollar stores from three main corps (Dollar Tree, Family Dollar, and Dollar General) across the continental USA. I mapped these to congressional legislative districts and made maps of the rate of stores per district.
+
+![](https://github.com/gperez21/Dollar-Store/blob/master/Dollar%20store/GIS/Maps/readme_pic.png)
+
 
 ## Highlights
 
