@@ -19,7 +19,7 @@ We wanted to look at the locations of dollar stores from three main corps (Dolla
 
 [**Romney-Clinton vs. Romney-Trump (box plot):**](https://github.com/gperez21/Dollar-Store/blob/master/Dollar%20store/GIS/Maps/Romney_Clinton.pdf) Shows how the distribution of the number of stores in districts That switched R-D those that remained R in 2016.
 
-[**Flipped Districts:**](https://github.com/gperez21/Dollar-Store/blob/master/Dollar%20store/GIS/Maps/flipped_scatter.pdf)
+[**Flipped Districts:**](https://github.com/gperez21/Dollar-Store/blob/master/Dollar%20store/GIS/Maps/Flipped.pdf)
 
 [**All District Breakdowns (box plot):**](https://github.com/gperez21/Dollar-Store/blob/master/Dollar%20store/GIS/Maps/All_box.pdf)
 
