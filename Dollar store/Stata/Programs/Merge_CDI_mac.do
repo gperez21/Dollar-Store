@@ -110,7 +110,9 @@ replace sorter = 4 if District_type == "Romney-Trump"
 replace sorter = 1 if District_type == "Romney-Clinton"
 replace sorter = 5 if District_type == ""
 
-replace cluster = flipped if flipped == "Flipped"
+// replace District_type = flipped if flipped == "Flipped"
+
+// keep if flipped == "Flipped"
 
 graph box Number_of_stores, ///
 over(District_type, sort(sorter)) ///
@@ -118,7 +120,9 @@ box(1, col(purple)) ///
 box(2, col(medium-blue)) ///
 box(3, col(purple)) ///
 box(4, col(cranberry)) ///
-ylab(,nogrid)
+ylab(,nogrid) 
+///
+(dot Number, over(District_type))
 
 // , graphregion(fcolor(white))) ///
 // ylab(, nogrid)
@@ -160,3 +164,15 @@ twoway ///
 lcolor(blue)) 
 
 restore
+
+
+// experimental graph
+
+egen box = cut(Number), at(0(5)200)
+gen x = 0
+gen y = box
+
+
+
+sort District_type box 
+replace x = 2
