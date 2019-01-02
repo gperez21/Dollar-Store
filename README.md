@@ -13,13 +13,14 @@ We wanted to look at the locations of dollar stores from three main corps (Dolla
 
 [**Ohio Legislative Districts:**](https://github.com/gperez21/Dollar-Store/blob/master/Dollar%20store/GIS/Maps/Ohio_legislative.pdf) Number of dollar stores per Ohio State Legislative districts.
 
+### Graphs
 [**2016 Results and Stores (box plot):**](https://github.com/gperez21/Dollar-Store/blob/master/Dollar%20store/GIS/Maps/box_general_2016.pdf) Shows how the distribution of the number of stores in districts won by Clinton vs. those won by Trump.
 
 [**Obama-Trump vs. Obama-Clinton (box plot):**](https://github.com/gperez21/Dollar-Store/blob/master/Dollar%20store/GIS/Maps/Obama_Trump.pdf) Shows how the distribution of the number of stores in districts That switched D-R vs. those that remained D in 2016.
 
 [**Romney-Clinton vs. Romney-Trump (box plot):**](https://github.com/gperez21/Dollar-Store/blob/master/Dollar%20store/GIS/Maps/Romney_Clinton.pdf) Shows how the distribution of the number of stores in districts That switched R-D those that remained R in 2016.
 
-[**Flipped Districts:**](https://github.com/gperez21/Dollar-Store/blob/master/Dollar%20store/GIS/Maps/Flipped.pdf)
+[**Flipped Districts:**](https://github.com/gperez21/Dollar-Store/blob/master/Dollar%20store/GIS/Maps/Flipped.pdf) Christmas tree dot plot of all districts with highlighted districts that flipped R-D in 2018.
 
 [**All District Breakdowns (box plot):**](https://github.com/gperez21/Dollar-Store/blob/master/Dollar%20store/GIS/Maps/All_box.pdf)
 
