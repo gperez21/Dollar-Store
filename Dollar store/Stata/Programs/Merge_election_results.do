@@ -95,8 +95,15 @@ replace District_type = "Romney-Clinton" if General_2016 == "D" & General_2012 =
 gen sq_km = ALAND/1000000
 label var sq_km "Square Kilometers"
 
-sort Nu	
-keep if General_2012 == "D"
+* Make boxplot by flip clasification
+gen sorter = 2 if District_type == "Obama-Clinton"
+replace sorter = 3 if District_type == "Obama-Trump"
+replace sorter = 4 if District_type == "Romney-Trump"
+replace sorter = 1 if District_type == "Romney-Clinton"
+
+
+
+
 
 * Export data
 // export delimited "$Data\District_classification.csv", replace
@@ -124,14 +131,6 @@ replace sort2 = 6 if cluster == "Pure rural"
 graph box Number, over(cluster, sort(sort2)) ///
 ylab(,nogrid)
 
-* Make scatter of land area and stores
-twoway scatter Number sq_km ///
-msize(vsmall) ///
-mcolor(forrest) ///
-ylab(,nogrid)
-
-
-
 
 * Make boxplot Romney-Trump
 // graph box Number_of_stores ///
@@ -144,7 +143,7 @@ gen sorter = 2 if District_type == "Obama-Clinton"
 replace sorter = 3 if District_type == "Obama-Trump"
 replace sorter = 4 if District_type == "Romney-Trump"
 replace sorter = 1 if District_type == "Romney-Clinton"
-replace sorter = 5 if District_type == ""
+
 
 // replace District_type = flipped if flipped == "Flipped"
 

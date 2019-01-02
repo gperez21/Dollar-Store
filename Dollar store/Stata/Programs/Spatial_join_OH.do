@@ -15,7 +15,7 @@ gl Citylab_data "$root\City lab data"
 
  
 *Create a Dta from a shape file
-capture shp2dta using "$GIS/Pennsylvania_House_of_Representatives_Districts.shp", genid(_ID) data("$Data\PA_data.dta") coor("$Data\PA_coor.dta") replace
+capture shp2dta using "$GIS/tl_2016_39_sldl.shp", genid(_ID) data("$Data\PA_data.dta") coor("$Data\PA_coor.dta") replace
 
 *Import CSV with xy data
 import delimited "$Dollar_data\Dollar stores.csv", stringcols(4 9) clear 
