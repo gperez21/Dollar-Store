@@ -73,6 +73,9 @@ replace District_type = "Romney-Clinton" if General_2016 == "D" & General_2012 =
 // FL-07 swung towards clinton from a dead heat in 2012
 replace District_type = "Romney-Clinton" if district =="FL-07"
 
+// Find land area in square kilometers
+gen sq_km = ALAND/1000000
+label var sq_km "Square Kilometers"
 * Export data
 // export delimited "$Data\District_classification.csv", replace
 // collapse (mean) Number_of_stores, by(cluster)
@@ -86,6 +89,26 @@ replace District_type = "Romney-Clinton" if district =="FL-07"
 // if District_type == "Obama-Trump" | District_type == "Obama-Clinton", ///
 // by(District_type, graphregion(fcolor(white))) ///
 // ylab(, nogrid)
+
+
+* Make box plot of urban rural suburban
+gen sort2 = 1 if cluster == "Pure urban"
+replace sort2 = 2 if cluster == "Urban-suburban mix"
+replace sort2 = 3 if cluster == "Dense suburban"
+replace sort2 = 4 if cluster == "Sparse suburban"
+replace sort2 = 5 if cluster == "Rural-suburban mix"
+replace sort2 = 6 if cluster == "Pure rural"
+
+graph box Number, over(cluster, sort(sort2)) ///
+ylab(,nogrid)
+
+* Make scatter of land area and stores
+twoway scatter Number sq_km ///
+msize(vsmall) ///
+mcolor(forrest) ///
+ylab(,nogrid)
+
+
 
 
 * Make boxplot Romney-Trump
@@ -122,8 +145,7 @@ sort District_type Nu
 br
 * Scatter
 // twoway scatter trump16 Number
-gen sq_km = ALAND/1000000
-label var sq_km "Square Kilometers"
+
 
 preserve
 keep if cluster == "Pure rural" |  cluster == "Rural-suburban mix"
@@ -172,7 +194,7 @@ twoway ///
 (scatter y x if flipped != "Flipped", ///
 msize(vsmall) msymbol(o) ylab(,nogrid) leg(off) ///
 mcolor(purple%50) ///
-xlabel(0(30)150, 30 "Romney-Clinton" 60 "Obama-Clinton" 90 "Obama-Trump" 120 "Romney-Trump") ///
+xlabel(15(30)130 30 "Romney-Clinton" 60 "Obama-Clinton" 90 "Obama-Trump" 120 "Romney-Trump") ///
 ) ///
 (scatter y x if flipped == "Flipped", ///
 msize(small) msymbol(d) mcolor(orange) ylab(,nogrid) leg(off))
