@@ -47,9 +47,9 @@ collapse (sum) count, by(STATEFP COUNTYFP GEOID NAME)
 export delimited "$Dollar_data\WholeFoods_by_county.csv"
 
 
-// Find how many dollar stores there are in each county
-*
 
+
+// Find how many dollar stores there are in each county
 *Import CSV with xy data
 import delimited "$Dollar_data\Dollar stores.csv", stringcols(4 9) clear 
 drop ïobjectid
@@ -57,7 +57,7 @@ replace zip5 = (5-length(zip5))*"0" +zip5
 gen _X = x
 gen _Y = y
 
-save "Dollar_store_info.dta", replace
+save "$Data\Dollar_store_info.dta", replace
 
 
 * Spatial join using geoinpoly points to polygons
