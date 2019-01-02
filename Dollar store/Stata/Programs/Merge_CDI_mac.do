@@ -49,16 +49,7 @@ merge m:1 state number using "$Data/CDI.dta"
 // keep if _m == 3
 drop _m
 
-preserve
-
 merge m:1 district using "$Data/Flipped_seats.dta"
-keep if _m == 3
-tempfile flipped
-save `flipped'
-
-restore
-
-append using `flipped'
 
 save "$Data/Dollar_CDI.dta", replace
 
@@ -68,10 +59,10 @@ use "$Data/Dollar_CDI.dta", clear
 gen Number_of_stores = 1
 
 collapse (sum) Number_of_stores, by(district cluster _ID General_* romney12 trump16 ALAND flipped)
+
 label var Number "Number of Dollar Stores in District"
 label var General_2016 "Election Result, 2016"
 label var trump16 "Trump Share of District Votes"
-
 label var General_2012 "Election Result, 2012"
 label var romney12 "Romney Share of District Votes"
 
@@ -172,7 +163,18 @@ egen box = cut(Number), at(0(5)200)
 gen x = 0
 gen y = box
 
-
-
 sort District_type box 
+egen rank = rank(_n), by(District_type box)
+egen box_num = max(rank), by(District_type box)
+replace x = (rank-(box_num/2))+30*sorter
+
+twoway ///
+(scatter y x if flipped != "Flipped", ///
+msize(vsmall) msymbol(o) ylab(,nogrid) leg(off) ///
+mcolor(purple%50) ///
+xlabel(0(30)150, 30 "Romney-Clinton" 60 "Obama-Clinton" 90 "Obama-Trump" 120 "Romney-Trump") ///
+) ///
+(scatter y x if flipped == "Flipped", ///
+msize(small) msymbol(d) mcolor(orange) ylab(,nogrid) leg(off))
+
 replace x = 2
