@@ -29,7 +29,7 @@ We wanted to look at the locations of dollar stores from three main corps (Dolla
 
 [**Mean Number of stores by Citylab cluster (CSV):**](https://github.com/gperez21/Dollar-Store/blob/master/Dollar%20store/Stata/Data/Mean_store_by_cluster.csv) Citylab publishes "cluster" [classifications](https://github.com/theatlantic/citylab-data/tree/master/citylab-congress) for each congressional district. This table shows the mean number of stores per district, broken down by Citylab cluster.
 
-
+[**Whole Foods Locations by County:**](https://github.com/gperez21/Dollar-Store/blob/master/Dollar%20store/Dollar%20store%20data/WholeFoods_by_county.csv) There are 198 counties in the USA with Whole Foods locations (at the time of the collection of this data set.
 
 ## Data Sources
 [Citylab:](https://github.com/theatlantic/citylab-data/tree/master/citylab-congress) CDI - Congressional district classifications
