@@ -24,8 +24,8 @@ replace General_2016 = "D" if Trump<Clinton
 gen General_2012 = "R" if Romney>Obama12
 replace General_2012 = "D" if Romney<Obama12
 
-//Florida 7th went narrowly Romney
-replace General_2012 = "R" if CD == "FL-07"
+//Florida 7th went narrowly Obama
+replace General_2012 = "D" if CD == "FL-07"
 ren CD district
 
 save "$Data/General_data.dta", replace
@@ -74,7 +74,7 @@ use "$Data/Dollar_store_master.dta", clear
 
 * Stores per district
 gen Number_of_stores = 1
-collapse (sum) Number_of_stores, by(district cluster _ID General_* Clinton Trump Obama12 Romney ALAND flipped)
+collapse (sum) Number_of_stores, by(district cluster _ID General_* Clinton Trump Obama12 Romney ALAND flipped cong*)
 
 * Clean names for export
 label var Number "Number of Dollar Stores in District"

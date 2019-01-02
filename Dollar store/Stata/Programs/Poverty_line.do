@@ -38,6 +38,11 @@ replace pct_185 = pct_185*100
 replace pct_100 = pct_100*100
 gen sq_km = ALAND/1000000
 gen sq_km_sq = sq_km^2
+
+gen thirty_sizty = 1 if Stores >= 30 & Stores <= 60
+keep if thir == 1
+collapse (mean) pct*, by(thi) 
+
 twoway ///
 (scatter Stores pct_185, ///
 msize(tiny) ///
