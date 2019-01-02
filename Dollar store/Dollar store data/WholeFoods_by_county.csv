@@ -1,0 +1,199 @@
+STATEFP,COUNTYFP,GEOID,NAME,count
+01,073,01073,Jefferson,1
+01,089,01089,Madison,1
+01,097,01097,Mobile,1
+01,101,01101,Montgomery,1
+04,005,04005,Coconino,1
+04,013,04013,Maricopa,5
+04,019,04019,Pima,3
+04,025,04025,Yavapai,2
+05,093,05093,Mississippi,1
+05,119,05119,Pulaski,1
+05,143,05143,Washington,1
+06,001,06001,Alameda,5
+06,013,06013,Contra Costa,4
+06,019,06019,Fresno,1
+06,037,06037,Los Angeles,26
+06,041,06041,Marin,4
+06,053,06053,Monterey,1
+06,055,06055,Napa,1
+06,059,06059,Orange,6
+06,061,06061,Placer,1
+06,065,06065,Riverside,1
+06,067,06067,Sacramento,2
+06,073,06073,San Diego,5
+06,075,06075,San Francisco,7
+06,079,06079,San Luis Obispo,1
+06,081,06081,San Mateo,2
+06,083,06083,Santa Barbara,1
+06,085,06085,Santa Clara,8
+06,087,06087,Santa Cruz,2
+06,097,06097,Sonoma,5
+06,111,06111,Ventura,2
+06,113,06113,Yolo,1
+08,001,08001,Adams,1
+08,005,08005,Arapahoe,2
+08,013,08013,Boulder,5
+08,031,08031,Denver,4
+08,035,08035,Douglas,1
+08,037,08037,Eagle,1
+08,041,08041,El Paso,2
+08,059,08059,Jefferson,3
+08,069,08069,Larimer,1
+08,117,08117,Summit,1
+09,001,09001,Fairfield,5
+09,003,09003,Hartford,3
+09,009,09009,New Haven,1
+11,001,11001,District of Columbia,4
+12,011,12011,Broward,5
+12,021,12021,Collier,1
+12,031,12031,Duval,1
+12,057,12057,Hillsborough,2
+12,073,12073,Leon,1
+12,086,12086,Miami-Dade,6
+12,091,12091,Okaloosa,1
+12,095,12095,Orange,2
+12,099,12099,Palm Beach,4
+12,103,12103,Pinellas,1
+12,115,12115,Sarasota,1
+12,117,12117,Seminole,1
+13,051,13051,Chatham,1
+13,067,13067,Cobb,2
+13,089,13089,DeKalb,1
+13,121,13121,Fulton,5
+13,245,13245,Richmond,1
+15,003,15003,Honolulu,2
+15,009,15009,Maui,1
+16,001,16001,Ada,1
+17,031,17031,Cook,21
+17,043,17043,DuPage,4
+17,097,17097,Lake,2
+18,057,18057,Hamilton,1
+18,089,18089,Lake,1
+18,097,18097,Marion,1
+18,141,18141,St. Joseph,1
+19,153,19153,Polk,1
+20,091,20091,Johnson,3
+20,173,20173,Sedgwick,1
+21,067,21067,Fayette,1
+21,111,21111,Jefferson,1
+22,017,22017,Caddo,1
+22,033,22033,East Baton Rouge,1
+22,051,22051,Jefferson,1
+22,055,22055,Lafayette,1
+22,071,22071,Orleans,2
+22,103,22103,St. Tammany,1
+23,005,23005,Cumberland,1
+24,003,24003,Anne Arundel,1
+24,027,24027,Howard,1
+24,031,24031,Montgomery,5
+24,510,24510,Baltimore,2
+25,001,25001,Barnstable,1
+25,009,25009,Essex,3
+25,015,25015,Hampshire,1
+25,017,25017,Middlesex,13
+25,021,25021,Norfolk,5
+25,023,25023,Plymouth,1
+25,025,25025,Suffolk,7
+26,065,26065,Ingham,1
+26,125,26125,Oakland,3
+26,161,26161,Washtenaw,2
+26,163,26163,Wayne,1
+27,053,27053,Hennepin,5
+27,123,27123,Ramsey,1
+28,049,28049,Hinds,1
+29,189,29189,St. Louis,2
+29,510,29510,St. Louis,1
+31,055,31055,Douglas,1
+31,109,31109,Lancaster,1
+32,003,32003,Clark,4
+32,031,32031,Washoe,1
+33,011,33011,Hillsborough,2
+34,003,34003,Bergen,4
+34,005,34005,Burlington,1
+34,007,34007,Camden,1
+34,013,34013,Essex,2
+34,021,34021,Mercer,1
+34,025,34025,Monmouth,3
+34,027,34027,Morris,2
+34,039,34039,Union,2
+35,001,35001,Bernalillo,1
+35,043,35043,Sandoval,1
+35,049,35049,Santa Fe,2
+36,001,36001,Albany,1
+36,047,36047,Kings,2
+36,059,36059,Nassau,2
+36,061,36061,New York,8
+36,103,36103,Suffolk,1
+36,119,36119,Westchester,3
+37,021,37021,Buncombe,2
+37,063,37063,Durham,1
+37,067,37067,Forsyth,1
+37,081,37081,Guilford,1
+37,119,37119,Mecklenburg,2
+37,129,37129,New Hanover,1
+37,135,37135,Orange,1
+37,183,37183,Wake,3
+39,035,39035,Cuyahoga,3
+39,049,39049,Franklin,3
+39,061,39061,Hamilton,1
+39,113,39113,Montgomery,1
+39,165,39165,Warren,1
+40,109,40109,Oklahoma,1
+40,143,40143,Tulsa,2
+41,005,41005,Clackamas,2
+41,017,41017,Deschutes,1
+41,039,41039,Lane,1
+41,051,41051,Multnomah,4
+41,067,41067,Washington,2
+42,003,42003,Allegheny,3
+42,029,42029,Chester,1
+42,045,42045,Delaware,1
+42,077,42077,Lehigh,1
+42,091,42091,Montgomery,4
+42,101,42101,Philadelphia,3
+44,007,44007,Providence,3
+45,013,45013,Beaufort,1
+45,019,45019,Charleston,1
+45,045,45045,Greenville,1
+45,079,45079,Richland,1
+47,037,47037,Davidson,1
+47,065,47065,Hamilton,1
+47,093,47093,Knox,1
+47,157,47157,Shelby,2
+48,085,48085,Collin,2
+48,089,48089,Colorado,1
+48,091,48091,Comal,1
+48,113,48113,Dallas,3
+48,121,48121,Denton,1
+48,141,48141,El Paso,1
+48,149,48149,Fayette,1
+48,157,48157,Fort Bend,1
+48,187,48187,Guadalupe,1
+48,201,48201,Harris,5
+48,285,48285,Lavaca,1
+48,287,48287,Lee,1
+48,339,48339,Montgomery,4
+48,363,48363,Palo Pinto,1
+48,367,48367,Parker,2
+48,439,48439,Tarrant,2
+48,453,48453,Travis,1
+48,497,48497,Wise,1
+48,499,48499,Wood,1
+49,035,49035,Salt Lake,4
+49,043,49043,Summit,1
+51,013,51013,Arlington,2
+51,059,51059,Fairfax,5
+51,087,51087,Henrico,1
+51,107,51107,Loudoun,1
+51,510,51510,Alexandria,1
+51,540,51540,Charlottesville,1
+51,700,51700,Newport News,1
+51,810,51810,Virginia Beach,1
+53,011,53011,Clark,1
+53,033,53033,King,5
+53,053,53053,Pierce,1
+53,061,53061,Snohomish,1
+53,073,53073,Whatcom,1
+55,025,55025,Dane,1
+55,079,55079,Milwaukee,2
