@@ -9,6 +9,8 @@ We wanted to look at the locations of dollar stores from three main corps (Dolla
 ### Maps
 [**All districts:**](https://github.com/gperez21/data_vis_wa/blob/master/Dollar%20store/GIS/Maps/Dollar%20stores%20per%20district.pdf) Map of the whole continental USA with the nummber of dollar stores in each district.
 
+[**45-60 Store Districts:**](https://github.com/gperez21/Dollar-Store/blob/master/Dollar%20store/GIS/Maps/USA_60_45_highlighted.pdf) Map that highlights districts with between 45 and 60 dollar stores. 
+
 [**Pennsylvania State House:**](https://github.com/gperez21/Dollar-Store/blob/master/Dollar%20store/GIS/Maps/PA_house.pdf) Number of dollar stores per Pennsylvania state house districts.
 
 [**Ohio Legislative Districts:**](https://github.com/gperez21/Dollar-Store/blob/master/Dollar%20store/GIS/Maps/Ohio_legislative.pdf) Number of dollar stores per Ohio State Legislative districts.
