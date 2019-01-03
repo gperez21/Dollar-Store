@@ -125,34 +125,80 @@ gen diff_2016 = pct2016dem - pct2016rep
 gen diff_2018 = pct2018dem - pct2018rep
 gen swing_2018 = diff_2018 - diff_2016
 //dont include PA districts or those uncontested in either election
-replace swing =. if unc2016 != "" | unc2016 != ""
-replace swing =. if strpos(district, "PA")
+replace swing_2018 =. if unc2016 != "" | unc2016 != ""
+replace swing_2018 =. if strpos(district, "PA")
+
+
+// bands around 30-69
+gen band = "Fewer than 30" if Nu < 30 
+replace band = "From 30 to 60" if Nu >= 30 & Nu < 60
+replace band = "Greater than 60" if Nu > 60
+gen sorter2 = 1 if band == "Fewer than 30"
+replace sorter2 = 2 if band == "From 30 to 60"
+replace sorter2 = 3 if band == "Greater than 60"
+
+
+// bins of 15
+gen bin = "0-15" if Nu < 16
+replace bin = "15-30" if Nu >= 15 & Nu < 30
+replace bin = "30-45" if Nu >= 30 & Nu < 45
+replace bin = "45-60" if Nu >= 45 & Nu < 60
+replace bin = "60-75" if Nu >= 60 & Nu < 75
+replace bin = "75+" if Nu >= 75
 
 //find quitiles for store numbers
-sort Nu
-gen band = "Fewer than 30" if Nu < 30 
-replace band = "From 30 to 60" if Nu >= 10 & Nu < 60
-replace band = "Greater than 60" if Nu > 60
-gen sorter2 = 1 if band == "Less than 30"
-replace sorter2 = 2 if band == "30 to 60"
-replace sorter2 = 3 if band == "Greater than 60"
-egen Storextile = xtile(Number), nq(4)
-egen Median_swing = median(swing), by(band)
+egen swingxtile = xtile(swing_2018), nq(5)
+egen Median_swing = median(swing_2018 ), by(band)
 replace Median_swing = Median_swing*100
 label var Median_swing "Median Swing 2016-2018"
 
+
+* find seats held after each midterm
+order pct2016democrat pct2016other pct2016republican unc2016 pct2018dem pct2018rep unc2018, last
+replace pct2016dem = 0 if pct2016dem ==.
+replace pct2016rep = 0 if pct2016rep ==.
+gen map2016 = 1 if  pct2016dem > pct2016rep //& band == "From 30 to 60"
+replace map2016 = 2 if pct2016dem < pct2016rep //& band == "From 30 to 60"
+
+replace pct2018dem = 0 if pct2018dem ==.
+replace pct2018rep = 0 if pct2018rep ==.
+gen map2018 = 1 if  pct2018dem > pct2018rep //& band == "From 30 to 60"
+replace map2018 = 2 if pct2018dem < pct2018rep //& band == "From 30 to 60"
+
+gen mapbins = 1 if bin == "30-45"  | bin == "15-30" | bin ==  "60-75"
+replace mapbins = 2 if bin == "45-60"
+
+
+* make plots
+
 graph dot Median_swing, ///
-over(band, sort(sorter2)) ///
+over(band) ///
 nofill vertical ///
 graphregion(color(white))
+//
+graph dot ig map
 
-// dotplot swing, over(band) nx(35) ny(35) center median msize(small)
+dotplot Nu if map2016 == 2, over(swingxtile) center median msize(small)
 
+//
+// ///
+// over(band, sort(sorter2)) ///
+// nofill vertical ///
+// graphregion(color(white))
+
+dotplot swing, over(bin) ///
+center ///
+msize(small) ///
+graphregion(color(white))
+
+
+* Make PA map
+spmap mapbins using "$Data\Districts_coor.dta", id(_ID) fcolor(Blues) 
 
 ///
-over(band, sort(sorter2)) ///
-nofill vertical ///
-graphregion(color(white))
+clmethod(custom) clbreaks(1 3 5 7 9 12) ///
+legend(symy(*2) symx(*2) size(*2) position (4)) 
+
 
 * Export data
 // export delimited "$Data\District_classification.csv", replace
