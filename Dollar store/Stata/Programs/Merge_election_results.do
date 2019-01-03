@@ -62,19 +62,38 @@ drop _m
 merge m:1 district using "$Data/Flipped_seats.dta"
 drop _m
 
+* merge in 2016 congressional results
+preserve
+do import_2016_congressional
+restore
+merge m:1 district using "$Data\2016_results" 
+drop _m
+
+* merge in 2018 congressional results
+preserve
+do import_2018_congressional
+restore
+merge m:1 district using "$Data\2018_results" 
+drop _m
+
+
 * Keep only the data we want
 drop fulladdress store_type stype_num store_group stgrp_num y2008 y2009 y2010 ///
 y2011 y2012 y2013 y2014 y2015 y2016 y2017 y2018 year_first year_last
 drop dup dup st_type loc_id store_name_l store x y CDSESSN
 drop clinton16 trump16 obama12 romney12 obama08 mccain08
 save "$Data/Dollar_store_master.dta", replace
+compress
+
 
 
 use "$Data/Dollar_store_master.dta", clear
 
 * Stores per district
 gen Number_of_stores = 1
-collapse (sum) Number_of_stores, by(district cluster _ID General_* Clinton Trump Obama12 Romney ALAND flipped cong*)
+collapse (sum) Number_of_stores, by(district cluster _ID General_* Clinton ///
+Trump Obama12 Romney ALAND flipped cong* pct2016democrat pct2016other ///
+pct2016republican unc2016 pct2018rep pct2018dem unc2018)
 
 * Clean names for export
 label var Number "Number of Dollar Stores in District"
@@ -101,9 +120,39 @@ replace sorter = 3 if District_type == "Obama-Trump"
 replace sorter = 4 if District_type == "Romney-Trump"
 replace sorter = 1 if District_type == "Romney-Clinton"
 
+* Find difference between rep and dem pct in 2016 & 2018
+gen diff_2016 = pct2016dem - pct2016rep
+gen diff_2018 = pct2018dem - pct2018rep
+gen swing_2018 = diff_2018 - diff_2016
+//dont include PA districts or those uncontested in either election
+replace swing =. if unc2016 != "" | unc2016 != ""
+replace swing =. if strpos(district, "PA")
+
+//find quitiles for store numbers
+sort Nu
+gen band = "Fewer than 30" if Nu < 30 
+replace band = "From 30 to 60" if Nu >= 10 & Nu < 60
+replace band = "Greater than 60" if Nu > 60
+gen sorter2 = 1 if band == "Less than 30"
+replace sorter2 = 2 if band == "30 to 60"
+replace sorter2 = 3 if band == "Greater than 60"
+egen Storextile = xtile(Number), nq(4)
+egen Median_swing = median(swing), by(band)
+replace Median_swing = Median_swing*100
+label var Median_swing "Median Swing 2016-2018"
+
+graph dot Median_swing, ///
+over(band, sort(sorter2)) ///
+nofill vertical ///
+graphregion(color(white))
+
+// dotplot swing, over(band) nx(35) ny(35) center median msize(small)
 
 
-
+///
+over(band, sort(sorter2)) ///
+nofill vertical ///
+graphregion(color(white))
 
 * Export data
 // export delimited "$Data\District_classification.csv", replace
@@ -120,29 +169,6 @@ replace sorter = 1 if District_type == "Romney-Clinton"
 // ylab(, nogrid)
 
 
-* Make box plot of urban rural suburban
-gen sort2 = 1 if cluster == "Pure urban"
-replace sort2 = 2 if cluster == "Urban-suburban mix"
-replace sort2 = 3 if cluster == "Dense suburban"
-replace sort2 = 4 if cluster == "Sparse suburban"
-replace sort2 = 5 if cluster == "Rural-suburban mix"
-replace sort2 = 6 if cluster == "Pure rural"
-
-graph box Number, over(cluster, sort(sort2)) ///
-ylab(,nogrid)
-
-
-* Make boxplot Romney-Trump
-// graph box Number_of_stores ///
-// if District_type == "Romney-Trump" | District_type == "Romney-Clinton", ///
-// by(District_type, graphregion(fcolor(white))) ///
-// ylab(, nogrid)
-
-* Make boxplot Romney-Trump
-gen sorter = 2 if District_type == "Obama-Clinton"
-replace sorter = 3 if District_type == "Obama-Trump"
-replace sorter = 4 if District_type == "Romney-Trump"
-replace sorter = 1 if District_type == "Romney-Clinton"
 
 
 // replace District_type = flipped if flipped == "Flipped"
