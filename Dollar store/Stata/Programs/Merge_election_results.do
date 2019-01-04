@@ -131,7 +131,7 @@ replace swing_2018 =. if strpos(district, "PA")
 
 // bands around 30-69
 gen band = "Fewer than 30" if Nu < 30 
-replace band = "From 30 to 60" if Nu >= 30 & Nu < 60
+replace band = "From 30 to 60" if Nu >= 30 & Nu <= 60
 replace band = "Greater than 60" if Nu > 60
 gen sorter2 = 1 if band == "Fewer than 30"
 replace sorter2 = 2 if band == "From 30 to 60"
@@ -157,16 +157,21 @@ label var Median_swing "Median Swing 2016-2018"
 order pct2016democrat pct2016other pct2016republican unc2016 pct2018dem pct2018rep unc2018, last
 replace pct2016dem = 0 if pct2016dem ==.
 replace pct2016rep = 0 if pct2016rep ==.
-gen map2016 = 1 if  pct2016dem > pct2016rep //& band == "From 30 to 60"
-replace map2016 = 2 if pct2016dem < pct2016rep //& band == "From 30 to 60"
+gen map2016 = 1 if  pct2016dem > pct2016rep // band == "From 30 to 60"
+replace map2016 = 2 if pct2016dem < pct2016rep // band == "From 30 to 60"
 
 replace pct2018dem = 0 if pct2018dem ==.
 replace pct2018rep = 0 if pct2018rep ==.
-gen map2018 = 1 if  pct2018dem > pct2018rep //& band == "From 30 to 60"
-replace map2018 = 2 if pct2018dem < pct2018rep //& band == "From 30 to 60"
+gen map2018 = 1 if  pct2018dem > pct2018rep // band == "From 30 to 60"
+replace map2018 = 2 if pct2018dem < pct2018rep // band == "From 30 to 60"
 
 gen mapbins = 1 if bin == "30-45"  | bin == "15-30" | bin ==  "60-75"
 replace mapbins = 2 if bin == "45-60"
+
+
+* find quitiles for store numbers
+egen store_quintile = xtile(Nu), nq(5)
+label var Rep_Median_swing "REP Median Swing 2016-2018"
 
 
 * make plots
@@ -178,9 +183,9 @@ graphregion(color(white))
 //
 graph dot ig map
 
-dotplot Nu if map2016 == 2, over(swingxtile) center median msize(small)
+dotplot swing_2018 , over(store_quintile) center median msize(small)
 
-//
+graph box Nu , over(Rep_swingxtile) 
 // ///
 // over(band, sort(sorter2)) ///
 // nofill vertical ///
@@ -293,3 +298,26 @@ xlabel(15(30)130 30 "Romney-Clinton" 60 "Obama-Clinton" 90 "Obama-Trump" 120 "Ro
 msize(small) msymbol(d) mcolor(orange) ylab(,nogrid) leg(off))
 
 replace x = 2
+
+
+
+* Swing by Store quintile
+
+egen box = cut(swing_2018), at(-.2(.01).4)
+gen x = 0
+gen y = box
+
+sort store_quintile box 
+egen rank = rank(_n), by(store_quintile box )
+egen box_num = max(rank), by(store_quintile box )
+replace x = (rank-(box_num/2))+30*store_quintile
+
+twoway ///
+(scatter y x if map2016 == 1, ///
+msize(vsmall) msymbol(o) ylab(,nogrid) leg(off) ///
+mcolor(midblue) ///
+xlabel(15(30)160 30 "1st" 60 "2nd" 90 "3rd" 120 "4th" 150 "5th") ///
+) ///
+(scatter y x if map2016 == 2, ///
+msize(vsmall) msymbol(o) mcolor(cranberry%50) ylab(,nogrid) leg(off))
+
