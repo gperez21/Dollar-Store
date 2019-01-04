@@ -76,6 +76,13 @@ restore
 merge m:1 district using "$Data\2018_results" 
 drop _m
 
+* merge in life expectancy
+preserve 
+do import_life_expectancy
+restore
+merge m:1 district using "$Data\District_LE"
+drop _m
+
 
 * Keep only the data we want
 drop fulladdress store_type stype_num store_group stgrp_num y2008 y2009 y2010 ///
@@ -171,7 +178,7 @@ replace mapbins = 2 if bin == "45-60"
 
 * find quitiles for store numbers
 egen store_quintile = xtile(Nu), nq(5)
-label var Rep_Median_swing "REP Median Swing 2016-2018"
+
 
 
 * make plots
