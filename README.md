@@ -26,6 +26,8 @@ We wanted to look at the locations of dollar stores from three main corps (Dolla
 
 [**All District Breakdowns (box plot):**](https://github.com/gperez21/Dollar-Store/blob/master/Dollar%20store/GIS/Maps/All_box.pdf)
 
+
+[**Midterm Swing in GOP Held Districts:**](https://github.com/gperez21/Dollar-Store/blob/master/Dollar%20store/GIS/Maps/Republican%20district%20swing.pdf) 2018 Midterm swing in GOP held districts vs. number of dollar stores in district.
 ### CSV
 [**Stores per Congressional District (CSV):**](https://github.com/gperez21/Dollar-Store/blob/master/Dollar%20store/Stata/Data/District_classification.csv) Only districts outside of the continental USA and those without any dollar stores are excluded.
 
