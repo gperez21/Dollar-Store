@@ -1,8 +1,8 @@
 # Dollar Store Distribution
 We wanted to look at the locations of dollar stores from three main corps (Dollar Tree, Family Dollar, and Dollar General) across the continental USA. I mapped these to congressional legislative districts and made maps of the rate of stores per district.
 
-![](https://github.com/gperez21/Dollar-Store/blob/master/Dollar%20store/GIS/Maps/readme_pic.png)
 
+![](https://github.com/gperez21/Dollar-Store/blob/master/Dollar%20store/GIS/Maps/swing.PNG)
 
 ## Highlights
 
@@ -14,6 +14,8 @@ We wanted to look at the locations of dollar stores from three main corps (Dolla
 [**Pennsylvania State House:**](https://github.com/gperez21/Dollar-Store/blob/master/Dollar%20store/GIS/Maps/PA_house.pdf) Number of dollar stores per Pennsylvania state house districts.
 
 [**Ohio Legislative Districts:**](https://github.com/gperez21/Dollar-Store/blob/master/Dollar%20store/GIS/Maps/Ohio_legislative.pdf) Number of dollar stores per Ohio State Legislative districts.
+
+![](https://github.com/gperez21/Dollar-Store/blob/master/Dollar%20store/GIS/Maps/readme_pic.png)
 
 ### Graphs
 [**2016 Results and Stores (box plot):**](https://github.com/gperez21/Dollar-Store/blob/master/Dollar%20store/GIS/Maps/box_general_2016.pdf) Shows how the distribution of the number of stores in districts won by Clinton vs. those won by Trump.
