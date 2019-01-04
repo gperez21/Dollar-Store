@@ -205,79 +205,10 @@ clmethod(custom) clbreaks(1 3 5 7 9 12) ///
 legend(symy(*2) symx(*2) size(*2) position (4)) 
 
 
-* Export data
-// export delimited "$Data\District_classification.csv", replace
-// collapse (mean) Number_of_stores, by(cluster)
-// export delimited "$Data\Mean_store_by_cluster.csv", replace
+///////////////////////////////////////////////////////////////////////////////
+* experimental graphs
 
-* Make map
-// spmap Number_of_stores using "Districts_coor.dta", id(_ID) fcolor(Reds)
-
-* Make boxplot Obama-Trump
-// graph box Number_of_stores ///
-// if District_type == "Obama-Trump" | District_type == "Obama-Clinton", ///
-// by(District_type, graphregion(fcolor(white))) ///
-// ylab(, nogrid)
-
-
-
-
-// replace District_type = flipped if flipped == "Flipped"
-
-// keep if flipped == "Flipped"
-
-graph box Number_of_stores, ///
-over(District_type, sort(sorter)) ///
-box(1, col(purple)) ///
-box(2, col(medium-blue)) ///
-box(3, col(purple)) ///
-box(4, col(cranberry)) ///
-ylab(,nogrid) 
-///
-(dot Number, over(District_type))
-
-// , graphregion(fcolor(white))) ///
-// ylab(, nogrid)
-
-sort District_type Nu
-br
-* Scatter
-// twoway scatter trump16 Number
-
-
-preserve
-keep if cluster == "Pure rural" |  cluster == "Rural-suburban mix"
-
-twoway ///
-(scatter Number sq_km, ///
-			by(cluster, ///
-			graphregion(fcolor(white))) ///
-			ylab(,nogrid) ///
-			mcolor(cranberry%30)) ///
-(lfit Number sq_km, ///
-lcolor(medium-blue)) 
-
-
-restore
-
-
-preserve
-keep if cluster != "Pure rural" &  cluster != "Rural-suburban mix"
-// NV-04 is 10x bigger than any other in its class
-drop if district == "NV-04"
-twoway ///
-(scatter Number sq_km, ///
-			by(cluster, ///
-			graphregion(fcolor(white))) ///
-			ylab(,nogrid) ///
-			mcolor(cranberry%30)) ///
-(lfit Number sq_km, ///
-lcolor(blue)) 
-
-restore
-
-
-// experimental graph
+* experimental crhistmas tree graph
 
 egen box = cut(Number), at(0(5)200)
 gen x = 0
@@ -310,14 +241,26 @@ gen y = box
 sort store_quintile box 
 egen rank = rank(_n), by(store_quintile box )
 egen box_num = max(rank), by(store_quintile box )
-replace x = (rank-(box_num/2))+30*store_quintile
+replace x = (rank-(box_num/2))+15*store_quintile
 
 twoway ///
 (scatter y x if map2016 == 1, ///
-msize(vsmall) msymbol(o) ylab(,nogrid) leg(off) ///
-mcolor(midblue) ///
-xlabel(15(30)160 30 "1st" 60 "2nd" 90 "3rd" 120 "4th" 150 "5th") ///
+msize(small) msymbol(o) ylab(,nogrid) leg(off) ///
+mcolor(midblue%50) ///
+xlabel(7.5(15)80 15 "1st" 30 "2nd" 45 "3rd" 60 "4th" 75 "5th") ///
+graphregion(color(white)) ///
 ) ///
 (scatter y x if map2016 == 2, ///
-msize(vsmall) msymbol(o) mcolor(cranberry%50) ylab(,nogrid) leg(off))
+msize(small) msymbol(o) mcolor(cranberry%50) ylab(,nogrid) leg(off))
 
+* Experimental arrow graph
+gen x1 = diff_2016
+gen x2 = diff_2018
+gen y1 = Number
+
+twoway pcarrow y1 x1 y1 x2 if map2016 == 2, ///
+msize(tiny) mcolor(cranberry%50) lcolor(cranberry%50) ///
+ylab(,nogrid) graphregion(color(white))
+
+
+ 
