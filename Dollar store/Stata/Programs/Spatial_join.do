@@ -17,8 +17,6 @@ gl Citylab_data "$root\City lab data"
 *Create a Dta from a shape file
 capture shp2dta using "$GIS/Shapefiles/tl_2018_us_cd116.shp", genid(_ID) data("$Data\Districts_data.dta") coor("$Data\Districts_coor.dta") replace
 
-use "$Data\Districts_coor.dta", clear
-
 *Import CSV with xy data
 import delimited "$Dollar_data\Dollar stores.csv", stringcols(4 9) clear 
 drop ïobjectid
@@ -27,7 +25,6 @@ gen _X = x
 gen _Y = y
 
 save "$Data\Dollar_store_info.dta", replace
-
 
 * Spatial join using geoinpoly points to polygons
 geoinpoly _Y _X using "$Data\Districts_coor.dta"

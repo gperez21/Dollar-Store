@@ -83,6 +83,13 @@ restore
 merge m:1 district using "$Data\District_LE"
 drop _m
 
+*merge in poverty line data
+preserve
+do Poverty_line
+restore
+merge m:1 district using "$Data\poverty.dta"
+drop _m
+
 
 * Keep only the data we want
 drop fulladdress store_type stype_num store_group stgrp_num y2008 y2009 y2010 ///
@@ -100,7 +107,7 @@ use "$Data/Dollar_store_master.dta", clear
 gen Number_of_stores = 1
 collapse (sum) Number_of_stores, by(district cluster _ID General_* Clinton ///
 Trump Obama12 Romney ALAND flipped cong* pct2016democrat pct2016other ///
-pct2016republican unc2016 pct2018rep pct2018dem unc2018)
+pct2016republican unc2016 pct2018rep pct2018dem unc2018 life_expectancy pct_100 pct_185)
 
 * Clean names for export
 label var Number "Number of Dollar Stores in District"
@@ -175,11 +182,31 @@ replace map2018 = 2 if pct2018dem < pct2018rep // band == "From 30 to 60"
 gen mapbins = 1 if bin == "30-45"  | bin == "15-30" | bin ==  "60-75"
 replace mapbins = 2 if bin == "45-60"
 
-
 * find quitiles for store numbers
 egen store_quintile = xtile(Nu), nq(5)
 
+///////////////////////////////////////////////////////////////////////////////
+* Make tables
+collapse (median) pct_ 
 
+
+
+///////////////////////////////////////////////////////////////////////////////
+* Make graphs
+
+twoway scatter life_expectancy Nu, ///
+graphregion(color(white)) ///
+ylab(,nogrid tlength(0) ) ///
+mstyle(o) ///
+msize(small) ///
+mcolor(teal%60) ///
+xlab(,tlength(0))
+
+
+
+dotplot life_expectancy, over(cluster) median center
+
+regress diff_2016 life_expectancy pct_185 
 
 * make plots
 
