@@ -90,6 +90,10 @@ restore
 merge m:1 district using "$Data\poverty.dta"
 drop _m
 
+*merge HDI and other index data
+merge m:1 district using "$Data\district_HDI"
+drop _m
+
 
 * Keep only the data we want
 drop fulladdress store_type stype_num store_group stgrp_num y2008 y2009 y2010 ///
@@ -193,6 +197,8 @@ collapse (median) pct_
 
 ///////////////////////////////////////////////////////////////////////////////
 * Make graphs
+
+dotplot Nu, over(cluster) center
 
 twoway scatter life_expectancy Nu, ///
 graphregion(color(white)) ///
