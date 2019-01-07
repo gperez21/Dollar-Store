@@ -32,6 +32,7 @@ We wanted to look at the locations of dollar stores from three main corps (Dolla
 
 [**Life Expectancy vs. Number of Dollar stores:**](https://github.com/gperez21/Dollar-Store/blob/master/Dollar%20store/GIS/Maps/life_expectancy.pdf) Scatter plot of district life expectancy vs. the number of stores in a district.
 
+[**Dotplot of Stores by Citylab Cluster:**](https://github.com/gperez21/Dollar-Store/blob/master/Dollar%20store/GIS/Maps/dotplot_stores_by_cluster.pdf)
 ### CSV
 [**Stores per Congressional District (CSV):**](https://github.com/gperez21/Dollar-Store/blob/master/Dollar%20store/Stata/Data/District_classification.csv) Only districts outside of the continental USA and those without any dollar stores are excluded.
 
