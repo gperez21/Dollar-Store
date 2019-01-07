@@ -1,20 +1,17 @@
-// This file spatially joins xy data to shapefiles
-
-* set up
 clear
 set type double
-cd "C:\Users\perez_g\Desktop\Data_vis_wa\data_vis_wa\Dollar store\Stata\Programs"
+cd "/Users/lep12/Desktop/Dollar-Store/Dollar store/Stata/Programs"
 
-gl root "C:\Users\perez_g\Desktop\Data_vis_wa\data_vis_wa\Dollar store"
-gl GIS "$root\GIS"
-gl Stata "$root\Stata"
-gl Data "$Stata\Data"
-gl Dollar_data "$root\Dollar store data"
-gl Electoral_data "$root\Electoral data"
-gl Citylab_data "$root\City lab data"
+gl root "/Users/lep12/Desktop/Dollar-Store/Dollar store"
+gl GIS "$root/GIS"
+gl Stata "$root/Stata"
+gl Data "$Stata/Data"
+gl Dollar_data "$root/Dollar store data"
+gl Electoral_data "$root/Electoral data"
+gl Citylab_data "$root/City lab data"
 
 * import CDI file from city labs
-import excel "$Electoral_data\general_results.xlsx", sheet("Results") cellrange(A2:I437) firstrow clear
+import excel "$Electoral_data/general_results.xlsx", sheet("Results") cellrange(A2:I437) firstrow clear
 ren H Obama08
 ren Obama Obama12
 
@@ -64,32 +61,38 @@ drop _m
 
 * merge in 2016 congressional results
 preserve
-do import_2016_congressional
+// do import_2016_congressional
 restore
-merge m:1 district using "$Data\2016_results" 
+merge m:1 district using "$Data/2016_results" 
 drop _m
 
 * merge in 2018 congressional results
 preserve
-do import_2018_congressional
+// do import_2018_congressional
 restore
-merge m:1 district using "$Data\2018_results" 
+merge m:1 district using "$Data/2018_results" 
 drop _m
 
 * merge in life expectancy
 preserve 
-do import_life_expectancy
+// do import_life_expectancy
 restore
-merge m:1 district using "$Data\District_LE"
+merge m:1 district using "$Data/District_LE"
 drop _m
 
 *merge in poverty line data
 preserve
-do Poverty_line
+// do Poverty_line
 restore
-merge m:1 district using "$Data\poverty.dta"
+merge m:1 district using "$Data/poverty.dta"
 drop _m
 
+*merge HDI
+preserve
+do import_hdi.do
+restore
+merge m:1 district using "$Data/district_HDI"
+drop _m
 
 * Keep only the data we want
 drop fulladdress store_type stype_num store_group stgrp_num y2008 y2009 y2010 ///
@@ -107,7 +110,8 @@ use "$Data/Dollar_store_master.dta", clear
 gen Number_of_stores = 1
 collapse (sum) Number_of_stores, by(district cluster _ID General_* Clinton ///
 Trump Obama12 Romney ALAND flipped cong* pct2016democrat pct2016other ///
-pct2016republican unc2016 pct2018rep pct2018dem unc2018 life_expectancy pct_100 pct_185)
+pct2016republican unc2016 pct2018rep pct2018dem unc2018 life_expectancy ///
+pct_100 pct_185 HDIndex HealthIndex EducationIndex IncomeIndex)
 
 * Clean names for export
 label var Number "Number of Dollar Stores in District"
@@ -189,8 +193,15 @@ egen store_quintile = xtile(Nu), nq(5)
 * Make tables
 collapse (median) pct_ 
 
+///////////////////////////////////////////////////////////////////////////////
+* Make maps
 
-
+spmap store_quintile using "$Data/Districts_coor" , id(_ID) fcolor(Reds) ///
+clmethod(custom) clbreaks(0 1.1 2.1 3.1 4.1 5.1)
+ 
+egen qmin = min(Nu), by(store_quint)
+egen qmax = max(Nu), by(store_quint)
+collapse (mean) qmin qmax, by(store_quint)
 ///////////////////////////////////////////////////////////////////////////////
 * Make graphs
 
@@ -232,7 +243,7 @@ graphregion(color(white))
 
 
 * Make PA map
-spmap mapbins using "$Data\Districts_coor.dta", id(_ID) fcolor(Blues) 
+spmap mapbins using "$Data/Districts_coor.dta", id(_ID) fcolor(Blues) 
 
 ///
 clmethod(custom) clbreaks(1 3 5 7 9 12) ///

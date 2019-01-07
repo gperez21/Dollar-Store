@@ -3,7 +3,7 @@
 * set up
 clear
 set type double
-cd "/Users/lep12/Desktop/Dollar-Store/Dollar store/Stata"
+cd "/Users/lep12/Desktop/Dollar-Store/Dollar store/Stata/Programs"
 
 gl root "/Users/lep12/Desktop/Dollar-Store/Dollar store"
 gl GIS "$root/GIS"
@@ -14,7 +14,7 @@ gl Citylab_data "$root/City lab data"
 gl Electoral_data "$root/Electoral data"
 
 * import HDI from measure of america
-import excel "$Electoral_data/Geographies_of_Opportunity_Ranking_Well_Being_by_Congressional_District_(114th_Congress) (1).xlsx", sheet("Districts") cellrange(A13:AQ450) firstrow clear
+import excel "$Electoral_data/Geographies_of_Opportunity_Ranking_Well_Being_by_Congressional_District_(114th_Congress).xlsx", sheet("Districts") cellrange(A13:AQ450) firstrow clear
 
 ren CongressionalDist district
 * create standard district variable
