@@ -1,4 +1,3 @@
-// This file spatially joins xy data to shapefiles
 
 * set up
 clear
@@ -111,7 +110,8 @@ use "$Data/Dollar_store_master.dta", clear
 gen Number_of_stores = 1
 collapse (sum) Number_of_stores, by(district cluster _ID General_* Clinton ///
 Trump Obama12 Romney ALAND flipped cong* pct2016democrat pct2016other ///
-pct2016republican unc2016 pct2018rep pct2018dem unc2018 life_expectancy pct_100 pct_185)
+pct2016republican unc2016 pct2018rep pct2018dem unc2018 life_expectancy ///
+pct_100 pct_185  HDIndex HealthIndex EducationIndex IncomeIndex)
 
 * Clean names for export
 label var Number "Number of Dollar Stores in District"
@@ -189,16 +189,28 @@ replace mapbins = 2 if bin == "45-60"
 * find quitiles for store numbers
 egen store_quintile = xtile(Nu), nq(5)
 
+gen order3 = 1 if cluster == "Pure urban"
+replace order3 = 2 if cluster == "Urban-suburban mix"
+replace order3 = 3 if cluster == "Dense suburban"
+replace order3 = 4 if cluster == "Sparse suburban"
+replace order3 = 5 if cluster == "Rural-suburban mix"
+replace order3 = 6 if cluster == "Pure rural"
+
 ///////////////////////////////////////////////////////////////////////////////
 * Make tables
-collapse (median) pct_ 
+dotplot IncomeIndex, over(order3) center ///
+xlab( 1 "Pure urban" 2  "Urban-suburban mix" 3  "Dense suburban" ///
+4 "Sparse suburban" 5 "Rural-suburban mix" 6 "Pure rural") ///
+msize(vsmall) ///
+msymbol(d)
 
 
 
 ///////////////////////////////////////////////////////////////////////////////
 * Make graphs
 
-dotplot Nu, over(cluster) center
+dotplot Nu, over(order3) center
+
 
 twoway scatter life_expectancy Nu, ///
 graphregion(color(white)) ///
@@ -254,16 +266,15 @@ egen box = cut(Number), at(0(5)200)
 gen x = 0
 gen y = box
 
-sort District_type box 
-egen rank = rank(_n), by(District_type box)
-egen box_num = max(rank), by(District_type box)
-replace x = (rank-(box_num/2))+30*sorter
+sort cluster box 
+egen rank = rank(_n), by(cluster box)
+egen box_num = max(rank), by(cluster box)
+replace x = (rank-(box_num/2))+30*order3
 
 twoway ///
 (scatter y x if flipped != "Flipped", ///
 msize(vsmall) msymbol(o) ylab(,nogrid) leg(off) ///
 mcolor(purple%50) ///
-xlabel(15(30)130 30 "Romney-Clinton" 60 "Obama-Clinton" 90 "Obama-Trump" 120 "Romney-Trump") ///
 ) ///
 (scatter y x if flipped == "Flipped", ///
 msize(small) msymbol(d) mcolor(orange) ylab(,nogrid) leg(off))
