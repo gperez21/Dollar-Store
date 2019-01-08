@@ -52,9 +52,6 @@ egen median_2018 = median(swing_2018), by(bin)
 
 graph dot median_2018, ///
 over(bin) ///
-msize(med) /// 
-mcolor(lavender) ///
-msymbol(d) ///
 vertical 
 
  
@@ -101,6 +98,8 @@ legend(symy(*2) symx(*2) size(*2) position (4))
 * income index dot plot
 use "$Data\dollar_master_clean", clear
 
+// drop if district == "AK-AL" | district == "HI-02"  | district == "HI-01" 
+
 egen box = cut(IncomeIndex), at(0(.25)10)
 gen x = 0
 gen y = box
@@ -117,7 +116,6 @@ msize(small) msymbol(o) ylab(,nogrid) leg(off) ///
 mcolor(midblue%50) ///
 xlabel(15 "0-15" 30 "15-30" 45 "30-45" 60 "45-60" 75 "60-75" 90 "75+", tlength(0)) ///
 xtitle(Number of Stores in District, size(small) margin(small)) ///
-ylabel( 10 "Max" ) /// 
 ytitle("SSRC Income Index", size(msmall) margin(small)) ///
 graphregion(color(white)) ///
 ) ///
