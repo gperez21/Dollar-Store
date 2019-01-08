@@ -196,6 +196,8 @@ replace order3 = 4 if cluster == "Sparse suburban"
 replace order3 = 5 if cluster == "Rural-suburban mix"
 replace order3 = 6 if cluster == "Pure rural"
 
+save "$Data\dollar_master_clean", replace 
+
 ///////////////////////////////////////////////////////////////////////////////
 * Make tables
 dotplot IncomeIndex, over(order3) center ///
