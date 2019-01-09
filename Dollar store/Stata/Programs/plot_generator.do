@@ -90,6 +90,7 @@ msize(tiny) mcolor(midblue%50) lcolor(midblue%50) ///
 
 ///////////////////////////////////////////////////////////////////////////////
 * map of bins
+
 spmap group1 using "$Data\Districts_coor.dta", id(_ID) fcolor(Reds) ///
 clmethod(custom) clbreaks(0 1.1 2.1 3.1 4.1 5.1 6.1) ///
 legend(symy(*2) symx(*2) size(*2) position (4)) 

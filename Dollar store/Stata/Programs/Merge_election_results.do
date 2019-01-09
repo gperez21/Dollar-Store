@@ -157,7 +157,7 @@ replace sorter2 = 3 if band == "Greater than 60"
 
 
 // bins of 15
-gen bin = "0-15" if Nu < 16
+gen bin = "0-15" if Nu < 15
 replace bin = "15-30" if Nu >= 15 & Nu < 30
 replace bin = "30-45" if Nu >= 30 & Nu < 45
 replace bin = "45-60" if Nu >= 45 & Nu < 60
