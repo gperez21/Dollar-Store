@@ -50,3 +50,8 @@ We wanted to look at the locations of dollar stores from three main corps (Dolla
 [Dollar Store Data:](https://raw.githubusercontent.com/jshannon75/snap_retailers_2008_2017/master/data/dollars_all_wide.csv) Location and other data on dollar stores in the continental USA
 
 [Shapefiles for Congressional Districts:](https://www.census.gov/geo/maps-data/data/cbf/cbf_cds.html) Shapefiles for state level districts can be found in a number of sites.
+
+## Methodology
+
+The initial data set of SNAP Authorized dollar stores listed store which existed during at least one year between 2008 and 2018. The vast majority of store (all but 600) existed during at least one year between 2014 and 2018. 
+
