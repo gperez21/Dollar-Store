@@ -47,6 +47,48 @@ replace zipcode = strtrim(zipcode)
 merge m:1 zipcode using "$Data/zipxy"
 drop if _m == 2
 
+destring x y, replace
+replace x = lat if x ==.
+replace y = lng if y ==.
+drop lat lng _merge
+gen flag = 1 if x==.
+sort location zipcode
+
+use "$Data\events_clean", clear
+gen _Y = x
+gen _X = y
+
+* Spatial join using geoinpoly points to polygons
+geoinpoly _Y _X using "$Data\Districts_coor.dta"
+
+
+* merge the matched polygons with the database and get attributes
+merge m:1 _ID using "$Data\Districts_data.dta", keep(master match) 
+keep if _m == 3
+drop _m
+
+* events per district
+gen counter = 1
+collapse (sum) counter, by(_ID STATEFP)
+ren counter indivisible_groups
+save "$Data\Events_in_dist", replace
+
+// drop if STATEFP == "02" | STATEFP == "15"
+// * Make PA map
+// spmap counter using "$Data\Districts_coor.dta" , id(_ID) fcolor(Reds) ///
+// legend(symy(*2) symx(*2) size(*2) position (4)) 
+
 
 
 use "$Data/dollar_master_clean", clear
+merge m:1 _ID using "$Data\Events_in_dist"
+
+twoway scatter indivi Num, ///
+msize(vsmall) ///
+mcolor(lavender%50) ///
+mstyle(o)
+
+
+
+
+
