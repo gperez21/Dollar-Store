@@ -82,11 +82,29 @@ save "$Data\Events_in_dist", replace
 
 use "$Data/dollar_master_clean", clear
 merge m:1 _ID using "$Data\Events_in_dist"
+keep if _m == 3
 
+// graph of
+keep if dis == "TX-04" | dis == "TX-05" | dis == "TX-08" | dis == "TX-11" ///
+| dis == "TX-13" | dis == "TX-19" | dis == "TX-36" | dis == "GA-01" ///
+| dis == "GA-09" | dis == "GA-10" | dis == "GA-14" | dis == "OK-01" ///
+| dis == "AL-01" | dis == "AL-04" | dis == "AZ-08" | dis == "IL-15" ///
+| dis == "IL-16" | dis == "KY-02" | dis == "KY-05" | dis == "KS-01"
+
+sort Nu
+graph bar Nu, over(dis)
+
+TX-4, TX-5, TX-8, TX-11, TX-13, TX-19, TX-36, GA-1, GA-9, GA-10, GA-14, OK-1, AL-1, AL-4, AZ-8, IL-15, IL-16, KY-2, KY-5 & KS-1
 twoway scatter indivi Num, ///
 msize(vsmall) ///
 mcolor(lavender%50) ///
-mstyle(o)
+mstyle(o) ///
+graphregion(color(white)) ///
+ylab(,nogrid) ///
+ytitle("Indivisible Groups")
+
+collapse (median) indivi, by(bin)
+graph dot indi, over(bin) vertical
 
 
 
